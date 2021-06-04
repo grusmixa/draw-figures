@@ -1,0 +1,33 @@
+<div class='container'>
+    <h1>Let's <span>paint!</span></h1>
+    
+  <form [formGroup]="myForm" novalidate>
+    <ul>
+      <div formArrayName="figuresLines">
+        <li
+          class="form-group"
+          *ngFor="let figure of getFigures(); let i = index"
+        >
+          <input
+            class="form-control"
+            formControlName="{{ i }}"
+            type="text"
+            placeholder="rectangle -p [50, 50] [100, 100] -c rgb(0, 255, 0) -b rgba(255, 0, 0, 0.3)"
+            required=''
+            ngClass='figure.error ? input__alert :'
+          />
+          <button class='btn btn__red' type="button" (click)="deleteFigure(figure.id)">Delete</button>
+          
+          <div [hidden]='!figure.error' >{{figure.errorMessage}}</div>
+        </li>
+      </div>
+    </ul>
+    <button class='btn btn__gray' type="button" (click)="clear()">Clear</button>
+    <button class='btn btn__blue' type="button" (click)="addFigure()">Add a new figure</button>
+    <button class='btn btn__green' type="submit" (click)="saveFigures()">Print</button>
+  </form>
+
+  <div>
+    <canvas #canvas width="1200" height="600" style="border:2px solid rgb(191, 207, 120); margin-top: 4%; box-shadow: -0.4em 0.4em 5px 5px rgba(145, 139, 139, 0.5); border-radius: 50px;"></canvas>
+  </div>
+</div>
